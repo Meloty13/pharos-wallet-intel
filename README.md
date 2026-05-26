@@ -1,3 +1,5 @@
+<img width="1536" height="1024" alt="Pharos Intelligence_V2" src="https://github.com/user-attachments/assets/b8eba96e-9d27-41ef-b069-76ee928e48d0" />
+
 # 🔬 Pharos Wallet Intelligence Skill
 
 ```
