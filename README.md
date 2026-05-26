@@ -36,7 +36,7 @@
 
 ---
 
-## ⚡ Quick Demo (60 seconds)
+## ⚡ Quick Demo
 
 ```bash
 # One command — full wallet intelligence
