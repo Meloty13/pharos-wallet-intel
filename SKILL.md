@@ -1,121 +1,89 @@
 ---
-name: pharos-wallet-intel
-description: >
-  Pharos Wallet Intelligence Skill. Use for any wallet analysis task on Pharos:
-  complete portfolio overview (native PHRS/PROS + all known ERC20 tokens),
-  token allowance and approval audit (security check on what contracts can spend
-  your tokens), or onboarding guidance for new wallets with zero activity.
-  Invoke when user mentions: "portfolio", "balances", "wallet overview",
-  "token approvals", "allowance check", "approval audit", "is my wallet safe",
-  "I'm new to Pharos", "how do I get started", "faucet", or asks to check any
-  wallet address on the Pharos network. Defaults to Atlantic testnet.
-  All operations are read-only — no transactions executed, no private key needed.
-version: 1.0.0
-requires:
-  anyBins:
-    - cast
+title: Pharos Wallet Intelligence
+description: Extended, strictly read-only wallet analysis skill for Pharos. Portfolio aggregation, transaction history, Wallet Health Score (5-axis risk grading), onboarding guidance, RealFi context, and ecosystem discovery. No private key required.
+triggers:
+  - show my portfolio
+  - what's in my wallet
+  - wallet balance for 0x
+  - show my transactions
+  - recent activity for 0x
+  - score my wallet
+  - wallet health
+  - wallet health check
+  - risk assessment
+  - is my wallet safe
+  - wallet grade
+  - I'm new to Pharos
+  - how do I get test tokens
+  - explain my RealFi assets
+  - what can I do with this token
+  - what DeFi protocols exist
+  - what protocols are on Pharos
+  - show me RealFi opportunities
+  - how do AI agents work on Pharos
+  - what is agent coordination
+  - explain x402 protocol
 ---
 
-# Pharos Wallet Intelligence Skill
-
-Extended wallet analysis for the Pharos blockchain — portfolio aggregation,
-token allowance security auditing, and new-user onboarding. Powered by
-Foundry (`cast`) against Pharos network RPC endpoints.
-
-## Prerequisites
-
-1. **Check Foundry is installed:**
-   ```bash
-   which cast
-   ```
-   If not found, install immediately:
-   ```bash
-   curl -L https://foundry.paradigm.xyz | bash
-   source ~/.zshenv && foundryup
-   cast --version
-   ```
-   Do NOT proceed without Foundry.
-
-2. **Check jq is installed:**
-   ```bash
-   which jq
-   ```
-   If not found: `sudo apt install jq` or `brew install jq`
-
-3. **No private key required.** All operations are read-only (`cast balance`,
-   `cast call`, `cast nonce` only). Users do not need to configure `$PRIVATE_KEY`.
-
-## Network Configuration
-
-Network details are stored in `assets/networks.json`.
-
-- **Default network:** Atlantic testnet (`atlantic-testnet`)
-- **Switch to mainnet:** When user says "mainnet", use the `mainnet` entry
-
-```bash
-# Read RPC for Atlantic testnet (default)
-RPC_URL=$(jq -r '.networks[] | select(.name=="atlantic-testnet") | .rpcUrl' assets/networks.json)
-NATIVE=$(jq -r '.networks[] | select(.name=="atlantic-testnet") | .nativeToken' assets/networks.json)
-EXPLORER=$(jq -r '.networks[] | select(.name=="atlantic-testnet") | .explorerUrl' assets/networks.json)
-
-# Read RPC for mainnet
-RPC_URL=$(jq -r '.networks[] | select(.name=="mainnet") | .rpcUrl' assets/networks.json)
-```
-
-## Address Validation
-
-Before running ANY command, validate every address provided:
-- Must be: `0x` followed by exactly 40 hexadecimal characters
-- Pattern: `/^0x[a-fA-F0-9]{40}$/`
-- If invalid: respond with "Please provide a valid wallet address
-  (0x followed by 40 hex characters)" and stop. Do not proceed.
+# Pharos Wallet Intelligence — SKILL.md
 
 ## Capability Index
 
-| User Need | Reference File |
-|-----------|---------------|
-| Portfolio / all balances / wallet overview | → `references/portfolio.md` |
-| Token allowances / approval audit / security check | → `references/allowance.md` |
-| New wallet / onboarding / faucet / getting started | → `references/onboarding.md` |
+| User Intent | Reference File |
+|---|---|
+| Portfolio overview (all tokens) | → `references/portfolio.md` |
+| Transaction history | → `references/history.md` |
+| Wallet health score / risk assessment | → `references/risk-score.md` |
+| AI Agent / RWA coordination context | → `references/ai-rwa.md` |
+| Onboarding (empty wallet, new user) | → `references/onboarding.md` |
+| RealFi asset explanation | → `references/realfi.md` |
+| Ecosystem discovery | → `references/discover.md` |
+| Single balance query (not aggregated) | Use base `cast balance` directly |
 
-Load the full reference file for the matched capability before executing.
-The reference files contain the exact commands, output format, and error
-handling for each operation.
+## Network Configuration
 
-## Quick Command Reference
+Load `assets/networks.json` for:
+- RPC URLs (Atlantic Testnet + Pacific Ocean Mainnet)
+- Chain IDs (688689 / 1672)
+- Explorer URLs (PharosScan)
+- Native token symbols (PHRS / PROS)
 
+## Token Registry
+
+Load `assets/tokens.json` for:
+- All known ERC20 addresses per network
+- Decimals per token
+- Symbol mappings
+
+## Ecosystem Data
+
+Load `assets/ecosystem.json` for:
+- RealFi Alliance partner statuses
+- Bridge infrastructure (LI.FI, LayerZero, Circle CCTP)
+- Analytics sources (Dune, PharosScan)
+- Incubator and funding information
+
+## Automation
+
+Use `scripts/analyze-wallet.sh` for one-command portfolio aggregation:
 ```bash
-# Native balance
-cast balance <address> --rpc-url <rpc> --ether
-
-# ERC20 token balance
-cast call <token> "balanceOf(address)(uint256)" <address> --rpc-url <rpc>
-
-# Token allowance (how much spender can spend from wallet)
-cast call <token> "allowance(address,address)(uint256)" <wallet> <spender> --rpc-url <rpc>
-
-# Transaction count (nonce)
-cast nonce <address> --rpc-url <rpc>
-
-# Read token name
-cast call <token> "name()(string)" --rpc-url <rpc>
+./scripts/analyze-wallet.sh <address> [atlantic-testnet|mainnet]
 ```
 
-## General Error Handling
+## Examples
 
-| Error | Action |
-|-------|--------|
-| `invalid address` in cast output | Recheck address format, report to user |
-| Connection timeout / `connection refused` | Verify RPC URL from `assets/networks.json`, retry once |
-| `execution reverted` on a token call | Skip that token, continue with remaining |
-| `jq: parse error` | Check that `assets/networks.json` and `assets/tokens.json` exist and are valid JSON |
-| Network not recognized | Only `atlantic-testnet` and `mainnet` are supported |
+See `assets/examples.md` for three wallet archetypes:
+1. Active Developer Wallet (A grade)
+2. Dormant Whale (D grade)
+3. New Wallet (onboarding flow)
 
-## Security Policy
+## Security & Constraints
 
-This skill is **strictly read-only**:
-- Only uses: `cast balance`, `cast call` (view functions), `cast nonce`
-- Never uses: `cast send`, `forge script`, `--private-key`
-- No transactions are broadcast
-- No wallet connections initiated
-- Safe to run against any address — yours or anyone else's
+- **Read-only**: No private keys, no transactions, no state changes
+- **Agent-native**: Designed for AI agent invocation via trigger phrases
+- **RealFi-aware**: Flags stablecoin depegging, liquidity drought, NAV staleness risks
+- **Cross-chain aware**: Detects CCTP, LI.FI, LayerZero patterns
+
+## Version
+
+v2.0 — May 2026

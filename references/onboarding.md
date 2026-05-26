@@ -101,3 +101,16 @@ Add these to MetaMask or any EVM wallet under "Add Network".
 - This is a pure information and guidance flow — no commands executed
 - If the user does not provide a wallet address, skip the balance/nonce check
   and present the guide directly
+
+### Supported Institutional Wallets
+
+Pharos integrates with major wallet providers for frictionless onboarding:
+
+| Wallet | Users | Type |
+|---|---|---|
+| **OKX Wallet** | 50M+ | Full Pharos mainnet support (Apr 29, 2026) |
+| **Topnod Wallet** | Ant Group | Institutional-grade, Web2-native UX |
+| **Any EVM Wallet** | — | Custom RPC: `https://rpc.pharos.xyz` |
+
+OKX Wallet users can participate in exclusive airdrop events directly within the app.
+Topnod provides Web2-native onboarding to reduce friction for institutional users.

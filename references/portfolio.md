@@ -119,3 +119,13 @@ Rules for the table:
 | `cast nonce` fails | Skip wallet status line, show balances only |
 | No tokens in `tokens.json` for network | Show native balance only |
 | Native balance = 0 AND nonce = 0 | Show empty portfolio + direct user to `references/onboarding.md` flow |
+
+### Step 6: CCTP Cross-Chain Detection
+
+After USDC balance is queried, add:
+- "This USDC may have arrived via Circle CCTP from Ethereum, Arbitrum, Solana, or 20+ other supported chains."
+- "Verify origin chain: check the deposit transaction on PharosScan for CCTP `messageReceived` events."
+- "CCTP enables native USDC transfers without additional bridging steps — regulated liquidity flows directly into Pharos."
+
+For wallets holding both USDC and WETH/LINK (mainnet), note:
+- "Multi-chain asset pattern detected. Likely bridged via LI.FI or LayerZero rather than CCTP-only."
