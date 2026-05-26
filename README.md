@@ -153,6 +153,10 @@ pharos-wallet-intel/
     ├── ai-rwa.md               ← Agent coordination, x402 protocol, Vishwa
     └── discover.md             ← Ecosystem overview with live statuses
 ```
+## reference cheatsheet
+
+<img width="1024" height="1536" alt="pharos-commands-cheatsheetV1" src="https://github.com/user-attachments/assets/be8fd555-6510-48dd-9176-b68a09a4e59f" />
+
 
 ---
 
@@ -160,6 +164,11 @@ pharos-wallet-intel/
 
 - [Foundry](https://getfoundry.sh) (`cast` in PATH)
 - `jq` (`winget install jqlang.jq` on Windows, `brew install jq` on macOS, `sudo apt install jq` on Linux/WSL)
-
+---
+### 1. Clone the repo
+```bash
+git clone https://github.com/Meloty13/pharos-wallet-intel.git
+cd pharos-wallet-intel
+```
 ## License
 MIT
