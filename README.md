@@ -1,16 +1,21 @@
+<p align="center">
 <img width="900" height="600" alt="Pharos Intelligence_V2_900x600" src="https://github.com/user-attachments/assets/7c713f83-34a8-47e9-b635-f35347de17c9" />
-
+</p>
 
 # 🔬 Pharos Wallet Intelligence Skill
 
-```
+<div align="center">
+
+<pre>
 ╔══════════════════════════════════════════════════════════╗
 ║  PHAROS WALLET INTELLIGENCE                              ║
 ║  ───────────────────────────────────                     ║
 ║  Portfolio • History • Health Score • RealFi • Ecosystem ║
 ║  All read-only. No private key. Agent-native.            ║
 ╚══════════════════════════════════════════════════════════╝
-```
+</pre>
+
+</div>
 
 > Extended, strictly read‑only wallet analysis skill for the [Pharos Agent Center](https://www.pharos.xyz/agent-center).  
 > Built on the official `pharos-skill-engine-0.1.0` architecture. **No private key required.**
